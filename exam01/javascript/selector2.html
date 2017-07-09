@@ -5,6 +5,76 @@
 <meta charset="utf-8">
 <title>exam</title>
 <link rel="stylesheet" href="common.css" />
+<script>
+
+// javascript code
+window.onload = function(){
+	//태그 순서가 첫번째인 모든 Elements를 선택
+	var examObj1 = document.getElementsByClassName('exam_wrap')[0];
+	examObj1.getElementsByTagName('button')[0].onclick = function(){
+		//var examChild = examObj1.getElementsByClassName('exam_q')[0].nextSibling[0];
+		//document.examChild.style.backgroundColor = 'yellow';
+		var examChild = examObj1.getElementsByClassName('exam_q')[0].querySelectorAll('.exam_q div:first-child');
+		for(var i = 0; i < examChild.length; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}	
+	};
+	//태그 순서가 마지막인 모든 Elements를 선택
+	var examObj2 = document.getElementsByClassName('exam_wrap')[1];
+	examObj2.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj2.getElementsByClassName('exam_q')[0].querySelectorAll('.exam_q div:last-child');
+		for(var i = 0; i < examChild.length; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}
+	};
+	//첫번째 자식 Element를 선택
+	var examObj3 = document.getElementsByClassName('exam_wrap')[2];
+	examObj3.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj3.getElementsByClassName('exam_q')[0].querySelectorAll('.exam_q *:first-child');
+		for(var i = 0; i < examChild.length; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}
+	};
+	//마지막 자식 Element를 선택
+	var examObj4 = document.getElementsByClassName('exam_wrap')[3];
+	examObj4.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj4.querySelectorAll('.exam_q *:last-child');
+		for(var i = 0; i < examChild.length; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}
+	};
+	//태그 순서가 2번째인 자식 Element를 선택
+	var examObj5 = document.getElementsByClassName('exam_wrap')[4];
+	examObj5.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj5.querySelectorAll('.exam_q *:nth-child(2)');
+		for(var i = 0; i < examChild.length; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}
+	};
+	//태그 순서가 3번째인 Element를 선택
+	var examObj6 = document.getElementsByClassName('exam_wrap')[5];
+	examObj6.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj6.querySelectorAll('.exam_q div');
+		examChild[2].style.backgroundColor = 'yellow';
+	};
+	//태그 순서가 3번째인 Element 이후의 Elements를 선택
+	var examObj7 = document.getElementsByClassName('exam_wrap')[6];
+	examObj7.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj7.querySelectorAll('.exam_q div');
+		for(var i = 2; i < examChild.length; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}
+	};
+	//태그 순서가 3번째인 Element 이전의 Elements를 선택
+	var examObj8 = document.getElementsByClassName('exam_wrap')[7];
+	examObj8.getElementsByTagName('button')[0].onclick = function(){
+		var examChild = examObj8.querySelectorAll('.exam_q div');
+		for(var i = 0; i < 3; i++){
+			examChild[i].style.backgroundColor = 'yellow';
+		}
+	};
+}
+</script>
 </head>
 <body>
 <!-- wrapper [s] -->
