@@ -68,7 +68,42 @@ $(function(){
 		nextMove();
 	});
 	// exam3 [e]
+	// exam4 [s]
+	var exam4 = $('.exam_wrap').eq(3),
+		nCnt4 = 0,
+		nMax4 = exam4.find('li').length;
 
+	var prevMove2 = function() {
+		if(nCnt4 == 0){
+			exam4.find('ul li').eq(nCnt4).removeClass('active');
+			exam4.find('ul li').eq(nCnt4-1).addClass('active');
+			nCnt4 = nMax4-1;
+		}else{
+			exam4.find('ul li').eq(nCnt4).removeClass('active');
+			exam4.find('ul li').eq(nCnt4-1).addClass('active');
+			nCnt4--;
+		}
+	};
+	var nextMove2 = function() {
+			if(nCnt4 < nMax4){
+				if(nCnt4 == nMax4-1){
+					exam4.find('ul li').eq(nCnt4).removeClass('active');
+					exam4.find('ul li').eq(0).addClass('active');
+					nCnt4 = 0;
+				}else{
+					exam4.find('ul li').eq(nCnt4).removeClass('active');
+					exam4.find('ul li').eq(nCnt4+1).addClass('active');
+					nCnt4++;
+				}
+			}
+	};
+	exam4.find('button').eq(0).on('click', function(){		
+		prevMove2();
+	});
+	exam4.find('button').eq(1).on('click', function(){		
+		nextMove2();
+	});
+	// exam4 [e]
 });
 </script>
 </head>
