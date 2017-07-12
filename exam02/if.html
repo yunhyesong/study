@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="common.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function(){
+	// exam1 [s]
+	var exam1 = $('.exam_wrap').eq(0),
+		nCnt1 = 0,
+		nMax1 = exam1.find('li').length ;
+
+	exam1.find(' button').on('click', function(){		
+		if(nCnt1 < nMax1){
+			exam1.find('ul li').eq(nCnt1).css('background','yellow');
+		}
+		nCnt1++;
+	});
+	// exam1 [e]
+	// exam2 [s]
+	var exam2 = $('.exam_wrap').eq(1),
+		nCnt2 = exam2.find('li').length - 1,
+		nMin2 = 0;
+
+	exam2.find(' button').on('click', function(){		
+		if(nCnt2 >= nMin2){
+			exam2.find('ul li').eq(nCnt2).css('background','yellow');
+		}
+		nCnt2--;
+	});
+	// exam2 [e]
+	// exam3 [s]
+	var exam3 = $('.exam_wrap').eq(2),
+		nCnt3 = 0,
+		nMax3 = exam3.find('li').length;
+
+	var prevMove = function() {
+		if(nCnt3 >= 0 && nCnt3 < nMax3){
+			if(nCnt3 == 0){
+				exam3.find('ul li').eq(nCnt3).css('background','none');
+			}else{
+				exam3.find('ul li').eq(nCnt3).css('background','none');
+				exam3.find('ul li').eq(nCnt3-1).css('background','yellow');
+				nCnt3--;
+			}
+		}
+	};
+	var nextMove = function() {
+		if(nCnt3 >= 0 && nCnt3 < nMax3-1){
+			if(nCnt3 < nMax3){
+				if(nCnt3 == nMax3-1){
+					exam3.find('ul li').eq(nCnt3).css('background','none');
+				}else{
+					exam3.find('ul li').eq(nCnt3).css('background','none');
+					exam3.find('ul li').eq(nCnt3+1).css('background','yellow');
+				}
+			}
+			nCnt3++;
+		}
+	};
+	exam3.find('button').eq(0).on('click', function(){		
+		prevMove();
+	});
+	exam3.find('button').eq(1).on('click', function(){		
+		nextMove();
+	});
+	// exam3 [e]
+
+});
+</script>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 첫번째부터 순서대로 선택하세요 (style 제어)</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+					<li>eight</li>
+				</ul>
+			</div>
+			<button type="button">다음</button>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막부터 역순대로 선택하세요 (style 제어)</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+				</ul>
+			</div>
+			<button type="button">이전</button>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 첫번째부터 순서대로 선택하고, 전에 선택했던 Element의 배경색을 지우세요 (style 제어)</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li style="background-color:yellow">one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+					<li>eight</li>
+					<li>nine</li>
+				</ul>
+			</div>
+			<button type="button">이전</button>
+			<button type="button">다음</button>
+		</div>
+        <div class="exam_wrap">
+            <h1>Q. 첫번째부터 순서대로 선택하고, 전에 선택했던 Element의 배경색을 지우시고, 무한loop 돌게 하세요 (클래스 제어)</h1>
+            <div class="exam_q"><!-- 부모 -->
+                <ul>
+                    <li class="active">one</li>
+                    <li>two</li>
+                    <li>three</li>
+                    <li>four</li>
+                    <li>five</li>
+                    <li>six</li>
+                    <li>seven</li>
+                    <li>eight</li>
+                    <li>nine</li>
+                </ul>
+            </div>
+            <button type="button">이전</button>
+            <button type="button">다음</button>
+        </div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+</body>
+</html>
