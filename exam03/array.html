@@ -10,6 +10,7 @@
 var objResultview01 = {
 	init: function () {
 		this.setElements();
+		this.bindEvents();
 	},
 	setElements: function () {
 		this.examWrap1 = $('.exam_wrap').eq(0);
@@ -20,11 +21,204 @@ var objResultview01 = {
 	},
 	examClickFunc: function () {
 		var examArray1 = ['Song', 'Yun','Hye'];
-		console.log(examArray1.join(''));
+		console.log(examArray1.join(' '));
 		
 	}
 };
-objResultview01.init();
+
+var objResultview02 = {
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap2 = $('.exam_wrap').eq(1);
+		this.examWrapBtn2 = this.examWrap2.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn2.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var examString2 = 'question',
+			examArray2 = [];
+
+		for (var i = 0, max = examString2.length; i < max + 1; i++){
+			examArray2[i] = examString2[max];
+			examArray2[max] = examString2[i];
+			max--;
+		}		
+		console.log(examArray2.join(''));
+	}
+};
+
+var objResultview03 = {
+	//examArray3 : [40, 100, 1, 5, 25, 10],
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap3 = $('.exam_wrap').eq(2);
+		this.examWrapBtn3 = this.examWrap3.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn3.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var examArray3 = [40, 100, 1, 5, 25, 10],
+			sortArray3 = [40, 100, 1, 5, 25, 10].sort(function(a,b){return b-a}),
+			sortResult3 = new Array();
+		for(var i = 0, max = examArray3.length ; i < max;){
+			for (var j  = 0; j < max ;){
+				if(examArray3[i] == sortArray3[j]){
+					sortResult3[i] = sortArray3.indexOf(sortArray3[j]);
+					i++;
+					j = 0;
+				}else{
+					j++;
+				}
+			}
+		}
+		console.log(sortResult3);		
+	}
+};
+
+var objResultview04 = {
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap4 = $('.exam_wrap').eq(3);
+		this.examWrapBtn4 = this.examWrap4.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn4.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var examArray4 = new Array(),
+			nMulti = 0,
+			nIndex = 0;
+
+		for (var n = 0; n < 8; n++){
+			examArray4[n] = new Array();
+		}
+
+		for (var i = 2, max = 10; i < max ; i++){
+			for (var j  =  1; j < max ; j++){
+				examArray4[nMulti][nIndex] =  i*j;
+				nIndex++;
+			}
+			nMulti++;
+		}
+		console.log(examArray4);
+	}
+};
+
+var objResultview05 = {
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap5 = $('.exam_wrap').eq(4);
+		this.examWrapBtn5 = this.examWrap5.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn5.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var examArray5 = new Array();
+		for (var i = 0, max = 9; i <= 9; i++){
+			examArray5[i] = i;
+		}
+		console.log(examArray5);
+	}
+};
+
+var objResultview06 = {
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap6 = $('.exam_wrap').eq(5);
+		this.examWrapBtn6 = this.examWrap6.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn6.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var examArray6 = new Array();
+		for (var i = 0, max = 6; i < max; i++){
+			examArray6[i] = Math.floor(Math.random()*6);
+		}
+		console.log(examArray6);
+	}
+};
+
+var objResultview07 = {
+	nCntClick : 0,
+	examArray7 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap7 = $('.exam_wrap').eq(6);
+		this.examWrapBtn7 = this.examWrap7.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn7.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var	arrayLength = this.examArray7.length,
+			arrayIndex = Math.floor(Math.random()*arrayLength);
+
+		this.examArray7.splice(arrayIndex,1);
+
+		console.log(this.examArray7);
+		this.nCntClick++;
+	}
+};
+
+var objResultview08 = {
+	init: function () {
+		this.setElements();
+		this.bindEvents();
+	},
+	setElements: function () {
+		this.examWrap8 = $('.exam_wrap').eq(7);
+		this.examWrapBtn8 = this.examWrap8.find('button');
+	},
+	bindEvents: function () {
+		this.examWrapBtn8.on('click', $.proxy(this.examClickFunc, this));
+	},
+	examClickFunc: function () {
+		var examArray8 = new Array();	
+		for (var nCnt = 0, max = 7; nCnt < max;){
+			var nRand = Math.floor(Math.random()*6);
+			if(jQuery.inArray(nRand, examArray8)==-1){
+				examArray8[nCnt] = nRand;
+				nCnt++;
+			}
+			if(nCnt == 6){
+				break;
+			}
+		}
+		console.log(examArray8);
+	}
+};
+$(function() {
+	objResultview01.init();
+	objResultview02.init();
+	objResultview03.init();
+	objResultview04.init();
+	objResultview05.init();
+	objResultview06.init();
+	objResultview07.init();
+	objResultview08.init();
+});
 </script>
 </head>
 <body>
