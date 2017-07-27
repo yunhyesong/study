@@ -63,7 +63,7 @@ var objResultview03 = {
 		this.examWrapBtn3 = this.examWrap3.find('button');
 	},
 	bindEvents: function () {
-		this.examWrapBtn3.on('click', $.proxy(this.examClickFunc, this));
+		this.examWrapBtn3.on('click', $.proxy(this.examClickFunc2, this));
 	},
 	examClickFunc: function () {
 		var examArray3 = [40, 100, 1, 5, 25, 10],
@@ -81,6 +81,39 @@ var objResultview03 = {
 			}
 		}
 		console.log(sortResult3);		
+	},
+	examClickFunc2: function () { 
+		var examArray3 = [40, 100, 1, 5, 25, 10],
+			array = new Array();
+		for (var i = 0, max = examArray3.length; i < max; ){
+			var arrayMax = Math.max.apply(null,examArray3);
+			if (examArray3[i] == arrayMax){
+				array.push(i);
+				examArray3[i] = null;
+				i = 0;
+			}else{
+				 i++;
+			}
+			if(array.length == 6){
+				break;
+			}
+		}
+		console.log(array);
+	},
+	examClickFunc3: function () { 
+		var examArray3 = [40, 100, 1, 5, 25, 10],
+		    array = new Array(),
+		    arrayMax;
+		for (var i = 0, max = examArray3.length; i < max; i++){
+			arrayMax = Math.max.apply(null,examArray3),
+			nMaxIndex = jQuery.inArray(arrayMax, examArray3);
+			
+			array.push(nMaxIndex);
+
+			examArray3[nMaxIndex] = null;
+
+		}
+		console.log(array);
 	}
 };
 
