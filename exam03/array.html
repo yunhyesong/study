@@ -21,7 +21,7 @@ var objResultview01 = {
 		this.examWrapBtn1.on('click', $.proxy(this.examClickFunc, this));
 	},
 	examClickFunc: function () {
-		var examArray1 = ['Song', 'Yun','Hye'];
+		var examArray1 = ['Song', 'Yun','Hye']; 
 		console.log(examArray1.join(' '));
 		
 	}
@@ -43,7 +43,7 @@ var objResultview02 = {
 		var examString2 = 'question',
 			examArray2 = [];
 
-		for (var i = 0, max = examString2.length; i < max + 1; i++){
+		for (var i = 0, max = examString2.length; i < max + 1; i++){ 
 			examArray2[i] = examString2[max];
 			examArray2[max] = examString2[i];
 			max--;
@@ -200,7 +200,7 @@ var objResultview08 = {
 		for (var nCnt = 0, max = 7; nCnt < max;){
 			var nRand = Math.floor(Math.random()*6);
 			if(jQuery.inArray(nRand, examArray8)==-1){
-				examArray8[nCnt] = nRand;
+				examArray8[nCnt] = nRand; 
 				nCnt++;
 			}
 			if(nCnt == 6){
@@ -208,7 +208,7 @@ var objResultview08 = {
 			}
 		}
 		console.log(examArray8);
-	}
+	} //js prototype
 };
 $(function() {
 	objResultview01.init();
