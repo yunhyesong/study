@@ -7,6 +7,91 @@
 <link rel="stylesheet" type="text/css" href="css/coca.css">
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
+var exam = exam || {};
+exam.View = exam.View || {};
+
+exam.View.CocaGame = function() {
+	this.init();
+};
+/*
+ * 1. 체크 영역의 체크 값을 받아와 설정 값과 비교
+ * 2. 체크 한 후 선택하기 버튼 운용 시 아래 action되는 영역으로 스크롤
+ * 3-1. 선택 값이 꽝일 경우 해당 인덱스 뚜껑을 제외한 나머지 뚜껑 중 랜덤으로 아래로 움직임
+ * 3-2. 선택 값이 당첨일 경우 해당 인텍스 뚜껑이 제일 빨리 아래로 움직임
+ * 4. 빨리 내려가는 뚜껑의 li에 winlane 클래스 추가
+ */
+exam.View.CocaGame.prototype = {
+	aSetcoca: [true, false, false], //초기값 설정 영역
+	init: function() {
+		this._assignElements();
+		this._attachEventHandlers();
+	},
+	_assignElements: function() {
+		this._selectCocaWrap = $('.evt_ct'); // 코카콜라 선택 영역
+		this._selectCocaNum = this._selectCocaWrap.find('.rabx input');
+		this._selectCocaBtn = this._selectCocaWrap.find('.btn_app'); //코카콜라 선택 버튼
+		this._playCocaWrap = $('.evt_ct2'); // 코카콜라 실행 영역
+		this._playCocaWrapY = this._playCocaWrap.offset().top; // 코카콜라 실행 영역 위치
+		this._playCocaList = this._playCocaWrap.find('.game_area li');
+		this._actionGom = this._playCocaWrap.find('.gom');
+	 	console.log(this._selectCocaNuminput);
+	 },
+	_attachEventHandlers: function() {
+		this._selectCocaBtn.on('click', $.proxy(this._onClickBtn, this));
+	},
+	_onClickBtn: function() {
+		this._moveWindow();
+		this._chekResult();
+	},
+	_chekResult: function() { //radio 버튼의 값과 세팅된 값 체크하고 맞는 함수 실행
+		for(var i =0, max = this._selectCocaNum.length; i < max; i++){ //radio버튼 체크된 인덱스 값 구하기
+			if(this._selectCocaNum[i].checked){
+				if(this.aSetcoca[i] == true){
+					this._resultTrue(i);
+					
+				}else if(this.aSetcoca[i] == false){
+					for(var j = 0; j < max; j++){
+						nRnad= Math.floor((Math.random() * max));
+						if(nRnad !== i){
+							 this._resultFalse(nRnad);
+							break;
+						}
+					}			
+				}
+			}
+		}
+	},
+	_moveWindow: function() {
+		// 코카콜라 실행 영역으로 화면을 이동시키는 모션 적용하기
+		$("html, body").stop().animate({
+			"scrollTop" : this._playCocaWrapY
+		}, 700);
+	},
+	_resultTrue: function(index) { //체크된 값이 true일 경우 실행
+		$(this._playCocaList).children().stop().animate({
+			top: '98px'
+		}, 1000);
+		$(this._actionGom).eq(index).stop().animate({
+			top: '98px'
+		}, 500);
+		$(this._actionGom).eq(index).parent().addClass('winlane');
+		window.console.log('우와! 성공하셨습니다!');
+	},
+	_resultFalse: function(index) { //체크된 값이 false일 경우 실행
+		$(this._playCocaList).children().stop().animate({
+			top: '98px'
+		}, 1000);
+		$(this._actionGom).eq(index).stop().animate({
+			top: '98px'
+		}, 500);
+		$(this._actionGom).eq(index).parent().addClass('winlane');
+		window.console.log('어머어머... 실패하셨어요... 저런...');
+	}
+};
+
+$(function() {
+	var oExamViewCocaGame = new exam.View.CocaGame();
+});
 </script>
 </head>
 <body>
@@ -41,7 +126,7 @@
 	<div class="evt_ct2">
 		<ul class="game_area sp" id="gameLst">
 		<li class="lane"><div class="sp gom"></div></li>
-		<li class="lane2 winlane"><div class="sp gom" style="top:98px"></div></li>
+		<li class="lane2"><div class="sp gom"></div></li>
 		<li class="lane3"><div class="sp gom"></div></li>
 		</ul>
 	</div>
