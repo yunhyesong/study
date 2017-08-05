@@ -34,7 +34,7 @@ exam.View.linePlay.prototype = {
 	_onClickBtn: function() {
 		if(this.aSetIndex.length == 0){  //보여질 이미지의 번호를 담고있는 배열을 세팅한다.
 			this._setCharacter();
-			while(this.nBefore == this.nCurrent){
+			while(this.nBefore !== this.nCurrent){
 				this._showCharacter();
 			}
 		}else{
@@ -50,7 +50,7 @@ exam.View.linePlay.prototype = {
 	_showCharacter: function() {
 		this.nCurrent = Math.floor((Math.random() * this.aSetIndex.length)); //보여질 랜덤 이미지를 정한다.
 		this._linePlayImg.eq(this.nCurrent).show().siblings().hide();
-		console.log('현재 아바타 인덱스 번호 : ', this.nCurrent);
+		console.log('현재 아바타 인덱스 번호 : ', this.aSetIndex[this.nCurrent]);
 	},
 	_deleteCharacter: function() {
 		this.aSetIndex.splice(this.nCurrent, 1); //보여진 이미지를 삭제한다.

@@ -9,7 +9,6 @@
 <script>
 var exam = exam || {};
 exam.View = exam.View || {};
-
 exam.View.CocaGame = function() {
 	this.init();
 };
@@ -22,6 +21,7 @@ exam.View.CocaGame = function() {
  */
 exam.View.CocaGame.prototype = {
 	aSetcoca: [true, false, false], //초기값 설정 영역
+	nSelectIndex: 0,
 	init: function() {
 		this._assignElements();
 		this._attachEventHandlers();
@@ -34,61 +34,59 @@ exam.View.CocaGame.prototype = {
 		this._playCocaWrapY = this._playCocaWrap.offset().top; // 코카콜라 실행 영역 위치
 		this._playCocaList = this._playCocaWrap.find('.game_area li');
 		this._actionGom = this._playCocaWrap.find('.gom');
-	 	console.log(this._selectCocaNuminput);
 	 },
 	_attachEventHandlers: function() {
 		this._selectCocaBtn.on('click', $.proxy(this._onClickBtn, this));
 	},
 	_onClickBtn: function() {
+		var oSelf = this;
+
 		this._moveWindow();
-		this._chekResult();
+		this._getIndex();
+
+		setTimeout( function() {
+			oSelf._chekResult();
+		},700);
+		
 	},
-	_chekResult: function() { //radio 버튼의 값과 세팅된 값 체크하고 맞는 함수 실행
+	_getIndex: function() {
 		for(var i =0, max = this._selectCocaNum.length; i < max; i++){ //radio버튼 체크된 인덱스 값 구하기
 			if(this._selectCocaNum[i].checked){
-				if(this.aSetcoca[i] == true){
-					this._resultTrue(i);
-					
-				}else if(this.aSetcoca[i] == false){
-					for(var j = 0; j < max; j++){
-						nRnad= Math.floor((Math.random() * max));
-						if(nRnad !== i){
-							 this._resultFalse(nRnad);
-							break;
-						}
-					}			
-				}
+				this.nSelectIndex = i;
+				window.console.log('선택된 radio버튼의 Index : ', this.nSelectIndex);
 			}
-		}
+		}	
 	},
-	_moveWindow: function() {
-		// 코카콜라 실행 영역으로 화면을 이동시키는 모션 적용하기
+	_chekResult: function() { //radio 버튼의 값과 세팅된 값 체크하고 맞는 함수 실행		
+		if(this.aSetcoca[this.nSelectIndex] == true){
+			this._resultFunc(this.nSelectIndex);
+			window.console.log('우와! 성공하셨습니다!');
+		}else{
+			var nRand= Math.floor((Math.random() * this._selectCocaNum.length));
+			if(nRand !== this.nSelectIndex){
+				 this._resultFunc(nRand);
+				 window.console.log('어머어머... 실패하셨어요... 저런...');
+				 window.console.log('당첨번호는 '+ (nRand+1) +'번 이었습니다');	
+				
+			}	
+		}	
+	},
+	_moveWindow: function() { // 코카콜라 실행 영역으로 화면을 이동시키는 모션 적용하기	
 		$("html, body").stop().animate({
 			"scrollTop" : this._playCocaWrapY
 		}, 700);
 	},
-	_resultTrue: function(index) { //체크된 값이 true일 경우 실행
+	_resultFunc: function(index) { //결과 값에 따라 실행되는 애니매이션을 정의한 함수
 		$(this._playCocaList).children().stop().animate({
-			top: '98px'
+			top: '80px'
 		}, 1000);
 		$(this._actionGom).eq(index).stop().animate({
 			top: '98px'
 		}, 500);
 		$(this._actionGom).eq(index).parent().addClass('winlane');
-		window.console.log('우와! 성공하셨습니다!');
-	},
-	_resultFalse: function(index) { //체크된 값이 false일 경우 실행
-		$(this._playCocaList).children().stop().animate({
-			top: '98px'
-		}, 1000);
-		$(this._actionGom).eq(index).stop().animate({
-			top: '98px'
-		}, 500);
-		$(this._actionGom).eq(index).parent().addClass('winlane');
-		window.console.log('어머어머... 실패하셨어요... 저런...');
+
 	}
 };
-
 $(function() {
 	var oExamViewCocaGame = new exam.View.CocaGame();
 });
