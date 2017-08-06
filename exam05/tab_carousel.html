@@ -36,7 +36,7 @@ button::-moz-focus-inner{padding:0;border:0}
 .slide_tab ul li a{display:inline-block;width:12px;height:12px;border-radius:100%;background:#ccc;vertical-align:top}
 .slide_tab ul li.active a{background:#000}
 .slide_cont{overflow:hidden;position:relative;height:440px}
-.slide_article{display:block;position:absolute;left:0;top:0;width:100%;height:440px}
+.slide_article{display:none;position:absolute;left:0;top:0;width:100%;height:440px;z-index: 0}
 .slide_article:nth-child(1){background:red}
 .slide_article:nth-child(2){background:orange}
 .slide_article:nth-child(3){background:yellow}
@@ -45,6 +45,7 @@ button::-moz-focus-inner{padding:0;border:0}
 .slide_article:nth-child(6){background:skyblue;color:#fff}
 .slide_article:nth-child(7){background:navy;color:#fff}
 .slide_article:nth-child(8){background:black;color:#fff}
+.slide_article.active{display:block;z-index: 2}
 .slide_setting{font-size:0;line-height:0}
 .slide_setting .slide_btn button{position:absolute;top:50%;z-index:30;margin:0 20px}
 .slide_setting .slide_btn button:nth-child(1){left:0}
@@ -106,7 +107,7 @@ button::-moz-focus-inner{padding:0;border:0}
 				</ul>
 			</div>
 			<div class="slide_cont">
-				<div id="slide1" class="slide_article active" style="z-index: 3">컨텐츠1</div>
+				<div id="slide1" class="slide_article active">컨텐츠1</div>
 				<div id="slide2" class="slide_article">컨텐츠2</div>
 				<div id="slide3" class="slide_article">컨텐츠3</div>
 				<div id="slide4" class="slide_article">컨텐츠4</div>
@@ -231,14 +232,14 @@ exam.View.carousel.prototype = {
 		this._changeTab();
 		this._changeCont();
 	},
-	_changeTab: function() { //컨트롤 버튼의 active컨트롤하는 함수
+	_changeTab: function() { //slide 컨트롤 버튼의 active컨트롤하는 함수
 		this.nCurrent = $(event.currentTarget);
 		this.nCurrent.addClass('active').siblings().removeClass('active');
 		this.nCurrent = this._carouselTabCont.children('.active').index()+1;
-		console.log('선택된 탭의 번호', this.nCurrent);
+		console.log('선택된 컨텐츠의 번호', this.nCurrent);
 	},
-	_changeCont: function() { //Tab의 contents영역 active컨트롤하는 함수
-		this._slideCont.children('#slide'+this.nCurrent).css('z-index', 3).siblings().css('z-index', 0).fadeIn('slow');
+	_changeCont: function() { //slide의 contents영역 active컨트롤하는 함수
+		this._slideCont.children('#slide'+this.nCurrent).fadeIn('slow').addClass('active').siblings().removeClass('active');
 	},
 	_preMove: function() { //이전 버튼 컨트롤
 		if (this.nCurrent >= 1 && this.nCurrent < this._carouselTab.length+1){		
@@ -248,8 +249,8 @@ exam.View.carousel.prototype = {
 				this.nCurrent--;
 			}
 			this._carouselTab.eq(this.nCurrent-1).addClass('active').siblings().removeClass('active');
-				this._changeCont();
-			console.log('선택된 탭의 번호', this.nCurrent);
+			this._changeCont();
+			console.log('선택된 컨텐츠의 번호', this.nCurrent);
 		}
 	},
 	_nextMove: function() { //다음버튼 컨트롤
@@ -260,8 +261,8 @@ exam.View.carousel.prototype = {
 				this.nCurrent++;
 			}
 			this._carouselTab.eq(this.nCurrent-1).addClass('active').siblings().removeClass('active');
-				this._changeCont();	
-			console.log('선택된 탭의 번호', this.nCurrent);
+			this._changeCont();	
+			console.log('선택된 컨텐츠의 번호', this.nCurrent);
 		}
 	}
 };
