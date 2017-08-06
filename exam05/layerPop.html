@@ -62,7 +62,6 @@ button::-moz-focus-inner{padding:0;border:0}
 (function (win, $) {
 var exam = exam || {};
 exam.View = exam.View || {};
-
 exam.View.layerPop = function() {
 	this.init();
 };
@@ -86,12 +85,8 @@ exam.View.layerPop.prototype = {
 		$(event.currentTarget).addClass('prev');
 	},
 	_onClickOpenBtn: function(event) { //열리는 버튼 선택 시 실행되는 함수
-		var oSlef = this;
 		this._layerPopLayer.show().attr('tabIndex', 0).focus();
 		this._layerPopOpenBtn.removeClass('prev');
-		this._layerPopLayer.focusout(function() {
-			oSlef._onClickCloseBtn;
-		});
 	},
 	_onClickCloseBtn: function() { //레이어 내부에 있는 닫기버튼 선택 시 실행되는 함수
 		this._layerPopLayer.removeAttr('tabIndex', 0).hide();
