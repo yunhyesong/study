@@ -176,7 +176,8 @@ exam.View.tabcontrol.prototype = {
 		console.log('선택된 탭의 번호', this.nCurrent);
 	},
 	_changeCont: function() { //Tab의 contents영역 active컨트롤하는 함수
-		this._tabCont.children('#thema'+this.nCurrent).addClass('active').siblings().removeClass('active');
+		//hasClass는 true, false값을 반환 하므로 children사용
+		this._tabCont.children('#thema'+this.nCurrent).addClass('active').siblings().removeClass('active'); 
 	},
 	_changeInfoNum: function() { //Tab의 현재 숫자 컨트롤하는 함수
 		this._tabInfoNum.children('.current').html(this.nCurrent);
@@ -188,7 +189,7 @@ exam.View.tabcontrol.prototype = {
 			}else{
 				this.nCurrent--;
 			}
-			this._tabcontrolTab.eq(this.nCurrent-1).addClass('active').siblings().removeClass('active');
+			this._tabcontrolTab.siblings().removeClass('active').eq(this.nCurrent-1).addClass('active');
 				this._changeCont();
 				this._changeInfoNum();	
 			console.log('선택된 탭의 번호', this.nCurrent);
@@ -201,7 +202,7 @@ exam.View.tabcontrol.prototype = {
 			}else{
 				this.nCurrent++;
 			}
-			this._tabcontrolTab.eq(this.nCurrent-1).addClass('active').siblings().removeClass('active');
+			this._tabcontrolTab.siblings().removeClass('active').eq(this.nCurrent-1).addClass('active');
 				this._changeCont();
 				this._changeInfoNum();	
 			console.log('선택된 탭의 번호', this.nCurrent);
@@ -239,7 +240,7 @@ exam.View.carousel.prototype = {
 		console.log('선택된 컨텐츠의 번호', this.nCurrent);
 	},
 	_changeCont: function() { //slide의 contents영역 active컨트롤하는 함수
-		this._slideCont.children('#slide'+this.nCurrent).fadeIn('slow').addClass('active').siblings().removeClass('active');
+		this._slideCont.children('#slide'+this.nCurrent).addClass('active').fadeIn('slow').siblings().removeClass('active');
 	},
 	_preMove: function() { //이전 버튼 컨트롤
 		if (this.nCurrent >= 1 && this.nCurrent < this._carouselTab.length+1){		
@@ -248,7 +249,7 @@ exam.View.carousel.prototype = {
 			}else{
 				this.nCurrent--;
 			}
-			this._carouselTab.eq(this.nCurrent-1).addClass('active').siblings().removeClass('active');
+			this._carouselTab.siblings().removeClass('active').eq(this.nCurrent-1).addClass('active');
 			this._changeCont();
 			console.log('선택된 컨텐츠의 번호', this.nCurrent);
 		}
@@ -260,7 +261,7 @@ exam.View.carousel.prototype = {
 			}else{
 				this.nCurrent++;
 			}
-			this._carouselTab.eq(this.nCurrent-1).addClass('active').siblings().removeClass('active');
+			this._carouselTab.siblings().removeClass('active').eq(this.nCurrent-1).addClass('active');
 			this._changeCont();	
 			console.log('선택된 컨텐츠의 번호', this.nCurrent);
 		}
