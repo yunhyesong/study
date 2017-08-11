@@ -78,19 +78,16 @@ exam.View.layerPop.prototype = {
 	},
 	_attachEventHandlers: function() {
 		this._layerPopOpenBtn.on('click', $.proxy(this._onClickOpenBtn, this));
-		this._layerPopOpenBtn.on('click', $.proxy(this._checkPrevFocus, this));
 		this._layerPopCloseBtn.on('click', $.proxy(this._onClickCloseBtn, this));
 	},
-	_checkPrevFocus: function(evnt) { //이전 버튼을 표시하기 위해 클래스 추가
-		$(event.currentTarget).addClass('prev');
-	},
 	_onClickOpenBtn: function(event) { //열리는 버튼 선택 시 실행되는 함수
+		$(event.currentTarget).addClass('prev');//이전 버튼을 표시하기 위해 클래스 추가
 		this._layerPopLayer.show().attr('tabIndex', 0).focus();
-		this._layerPopOpenBtn.removeClass('prev');
 	},
 	_onClickCloseBtn: function() { //레이어 내부에 있는 닫기버튼 선택 시 실행되는 함수
 		this._layerPopLayer.removeAttr('tabIndex', 0).hide();
 		this._layerPopWrap.find('button.prev').focus();
+		this._layerPopOpenBtn.removeClass('prev');
 	}
 };
 $(function () {
