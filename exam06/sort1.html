@@ -99,13 +99,12 @@ exam.View.sortFunc.prototype = {
 	},
 	_onClickBtn:  function(e) {
 		e.preventDefault();
-		this.nCurrent = $(event.currentTarget).parent().index();
+		this.nCurrent = $(event.currentTarget).parent().index(); //현재 선택한 버튼의 th로 인덱스 저장
 		this._sortCont();
-		console.log(this.nCurrent);
 	},
 	_sortCont: function() {
 		var oSelf = this;
-		this._sortTableTr.each(function(){
+		this._sortTableTr.each(function(){ //테이블의 열별로 정렬
 			this._sortTableTd[this.nCurrent].sort(function(a, b){
 				return $.text([a]) > $.text([b]) ?
 					oSelf.bInverse ? -1 : 1
