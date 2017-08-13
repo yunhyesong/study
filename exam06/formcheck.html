@@ -93,7 +93,7 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
 	<!-- footer [e] -->
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="js/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 (function (win, $) {
 var exam = exam || {};
@@ -149,7 +149,7 @@ exam.View.checkControl.prototype = {
 				}				
 			});
 		}else{ //check box , radio 버튼일때 체크 css 조절
-			this._checkBox.toggleClass(this.opts.sClassName, this._checkLabel.is(':checked'));
+			this._checkBox.toggleClass(this.opts.sClassName);
 		}
 	}
 };
