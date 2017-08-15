@@ -82,7 +82,6 @@ exam.View.sortFunc = function() {
 exam.View.sortFunc.prototype = {
 	sTarget: '',
 	nCurrent: '',
-	bInverse: false,
 	init: function() {
 		this._assignElements();
 		this._attachEventHandlers();
@@ -90,30 +89,54 @@ exam.View.sortFunc.prototype = {
 	_assignElements: function() {
 		this._sortWrap = $('#container');
 		this._sortTable = this._sortWrap.find('table');
-		this._sortTableTr = this._sortTable.find('tr');
-		this._sortTableTd = this._sortTable.find('td');
+		this._sortTableTr = this._sortTable.find('tbody tr');
+		this._sortTableTh = this._sortTable.find('th');
+		this._sortTableTbody = this._sortTable.find('tbody');
+		this._sortTableTd = this._sortTable.find('tbody td');
 		this._sortBtn = this._sortWrap.find('button');
 	},
 	_attachEventHandlers: function() {
-		this._sortBtn.on('click', $.proxy(this._onClickBtn, this));
+		this._sortBtn.on('click', $.proxy(this._onClickSort, this));
 	},
-	_onClickBtn:  function(e) {
+	_onClickSort:  function(e) {
 		e.preventDefault();
-		this.nCurrent = $(event.currentTarget).parent().index(); //현재 선택한 버튼의 th로 인덱스 저장
-		this._sortCont();
+		this.nCurrent = $(e.currentTarget).parent().index();
+		this._setCont();
 	},
-	_sortCont: function() {
-		var oSelf = this;
-		this._sortTableTr.each(function(){ //테이블의 열별로 정렬
-			this._sortTableTd[this.nCurrent].sort(function(a, b){
-				return $.text([a]) > $.text([b]) ?
-					oSelf.bInverse ? -1 : 1
-					: oSelf.bInverse ? 1 : -1;
-			}, function(){
-				return oSelf.parentNode; 
+	_setCont: function() {
+		var oSelf = this,
+			nCrnt = this.nCurrent
+			aTableEl = new Array(),
+			aResult = new Array(),
+			aTempEl = new Array(),
+			aTableRow = new Array();
+
+		this._sortTableTr.each(function(){
+			aTableRow.push($(this).html()); //각 tr들을 aTableRow배열에 넣는다.
+			$(this).find('td').filter(function(){ //선택된 버튼의 열의 td들을 찾음
+				if($(this).index() == nCrnt){ //현재 선택한 열의 td들을 배열에 넣어 정렬
+					aTempEl.push($(this).text());
+					aTableEl.push($(this).text());
+					aTableEl.sort();
+				}
 			});
-			this.bInverse = !this.bInverse;			
 		});
+		for(var i = 0, max = this._sortTableTr.length; i < max; i++){
+			aResult[i] = $.inArray(aTempEl[i], aTableEl);
+		}
+
+		this._sortTableTr.remove();
+		for(var i=0,max=this._sortTableTr.lenght; i<max; i++) {
+				this._sortTableTbody.append(aTableRow[aResult[i]]);
+		}
+
+		for (var key in aResult){
+			this._sortTableTbody.append('<tr>' + aTableRow[aResult[key]] + '</tr>');
+		}
+
+		console.log(aTempEl);	
+		console.log(aTableEl);	
+		console.log(aResult);
 	}
 };
 $(function () {
