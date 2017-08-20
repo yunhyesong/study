@@ -723,11 +723,10 @@ ins{text-decoration:none}
 	 var exam = exam || {};
 	 exam.View = exam.View || {};
 
-	 exam.View.stickyBtn = function() {
-		  this.init();
-		  this._chageBtnState();
+	 exam.View.stickyBtn = function() {	
+		this.init();  
+		this.checkTopState();
 	 };
-
 	 exam.View.stickyBtn.prototype = {
 	init: function() {
 		this._assignElements();
@@ -735,28 +734,50 @@ ins{text-decoration:none}
 	},
 	_assignElements: function() {
 		this._stickyWrap = $('#wrap');
+		this._stickyWrapY = this._stickyWrap.height();
 		this._stickyTopY = this._stickyWrap.find('#header').height();
-		this._stickyBottomY = this._stickyWrap.find('#footer').height();
+		this._stickyContH = this._stickyWrap.find('#container').height();
+		this._stickyFooterH = (this._stickyWrapY - this._stickyTopY - this._stickyContH);
+		this._stickyWindowY = $(window).height(); //보이는 윈도우이 높이 값을 저장
+		this._stickyFilter = this._stickyWrap.find('.filter_sort_wrap');
+		this._stickyFilterY = this._stickyWrap.find('.filter_sort_wrap').offset().top;
 		this._stickyMoveArea = this._stickyWrap.find('#container');
 		this._stickyBtn = this._stickyWrap.find('.btn_top a');
+		this._stickyBtnH = this._stickyBtn.height();
+		this._stickyBottomY = (this._stickyWrapY - this._stickyTopY - this._stickyWindowY - this._stickyBtnH);
 	},
 	_attachEventHandlers: function() {
-		this._stickyBtn.on('click', $.proxy(this._onClickTab, this));
+		this._stickyBtn.on('click', $.proxy(this._onClickTopBtn, this));
 	},
-	_onClickTab: function(e) {
+	checkTopState: function() { 
+		var windowTop = 0,
+		      oSelf = this;
+		
+		this._stickyBtn.css('display', 'none'); //처음에 Top버튼이 안보이도록 설정
+		$(window).on("scroll", function() {
+			windowTop = $(this).scrollTop(); //스크롤이 될때마다 top 값을 체크하여 저장
+
+			if(windowTop <= oSelf._stickyTopY  || windowTop >= oSelf._stickyBottomY){
+				oSelf._stickyBtn.css('display', 'none');
+			}else{
+				oSelf._stickyBtn.css('display', 'block');
+			}
+
+			if(windowTop >= oSelf._stickyFilterY){
+				oSelf._stickyFilter.addClass('sticky');
+			}else{
+				oSelf._stickyFilter.removeClass('sticky');
+			}
+		});
+		
+	},
+	_onClickTopBtn: function(e) {
 		e.preventDefault();
 		console.log(this._stickyTopY);
 
 		$("html, body").stop().animate({
 			"scrollTop" : 0
 		}, 700);
-	},
-	_chageBtnState: function() { 
-		var windowTop = $(window).scrollTop();
-		console.log(windowTop);
-		while(windowTop <= this._stickyTopY  || windowTop >= this._stickyBottomY){
-			this._stickyBtn.css('display', 'none');
-		}
 	}
 };
 
