@@ -756,18 +756,8 @@ ins{text-decoration:none}
 		this._stickyBtn.css('display', 'none'); //처음에 Top버튼이 안보이도록 설정
 		$(window).on("scroll", function() {
 			windowTop = $(this).scrollTop(); //스크롤이 될때마다 top 값을 체크하여 저장
-
-			if(windowTop <= oSelf._stickyTopY  || windowTop >= oSelf._stickyBottomY){
-				oSelf._stickyBtn.css('display', 'none');
-			}else{
-				oSelf._stickyBtn.css('display', 'block');
-			}
-
-			if(windowTop >= oSelf._stickyFilterY){
-				oSelf._stickyFilter.addClass('sticky');
-			}else{
-				oSelf._stickyFilter.removeClass('sticky');
-			}
+			oSelf._controlBtn(windowTop);
+			oSelf._controlStickyMenu(windowTop);			
 		});
 		
 	},
@@ -778,6 +768,20 @@ ins{text-decoration:none}
 		$("html, body").stop().animate({
 			"scrollTop" : 0
 		}, 700);
+	},
+	_controlBtn: function(top) {
+		if(top <= this._stickyTopY  || top >= this._stickyBottomY){
+			this._stickyBtn.css('display', 'none');
+		}else{
+			this._stickyBtn.css('display', 'block');
+		}
+	},
+	_controlStickyMenu: function(top) {
+		if(top >= this._stickyFilterY){
+			this._stickyFilter.addClass('sticky');
+		}else{
+			this._stickyFilter.removeClass('sticky');
+		}
 	}
 };
 
