@@ -134,7 +134,7 @@ exam.View.checkControl.prototype = {
 		this.sTarget.on('click', $.proxy(this._onClickForm, this)); 
 	},
 	_onClickForm: function(e) {
-		e.preventDefault();
+		// e.preventDefault();
 		var sCurrentValue = $(e.currentTarget); //현재 실행되는 요소 저장
 		if(this.opts.sPrefix == '.select'){ //select box일때 처리되는 영역
 			if(sCurrentValue !== this._checkVIsible){ // 메뉴를 선택했을때 값을 바꿔주는 영역
