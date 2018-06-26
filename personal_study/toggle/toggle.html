@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Toggle Contents</title>
+<style>
+/* Reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button,article,aside,dialog,footer,header,section,footer,nav,figure,main{margin:0;padding:0}
+article,aside,dialog,footer,header,section,footer,nav,figure,main{display:block}
+html,body{height:100%;-webkit-text-size-adjust:none;-ms-text-size-adjust:none}
+body,input,select,textarea,button{font-family:'Apple SD Gothic Neo', '돋움', Dotum, sans-serif; font-size:12px} 
+fieldset,li,img{border:0;vertical-align:top}
+ul,ol{list-style:none}
+button{overflow:visible;border:0;background-color:transparent;cursor:pointer}
+button::-moz-focus-inner{padding:0;border:0}
+address,caption,em{font-style:normal}
+a,a:focus,a:active,a:hover{text-decoration:none}
+table{border-collapse:collapse;border-spacing:0}
+.blind,caption span,legend{overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:1px;line-height:100px;white-space:nowrap}
+
+.section_cont{margin:20px 0;padding:50px 0;}
+.cont_inner{position:relative;width:500px;margin:0 auto}
+.btn_toggle{display: block;width: 500px;height: 50px;background: #e5e5e5}
+.toggle_box{margin-top: 50px}
+.btn_toggle.open .txt_open{display: block}
+.btn_toggle.open .txt_close{display: none}
+.btn_toggle.close .txt_open{display: none}
+.btn_toggle.close .txt_close{display:block }
+.cont_toggle{padding:50px 10px;background: beige}
+</style>
+</head>
+<body>
+	<div class="section_cont">
+		<div class="cont_inner">
+			<div class="toggle_box">
+				<button type="button" class="btn_toggle open"><span class="txt_open">펼쳐보기</span><span class="txt_close">닫기</span></button>
+				<div class="cont_toggle" style="display: none">
+					cont1
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
+	<script>
+	var exam = exam || {};
+	exam.View = exam.View || {};
+
+	exam.View.toggleEvent = function() {
+		this.init();
+	};
+
+	exam.View.toggleEvent.prototype = {
+		sTarget: '.toggle_box',
+		sActiveClass: 'open',
+		sCloseClass: 'close',
+		bOpen: false,
+		init: function() {
+			this._assignElements();
+			this._attachEventHandlers();
+			this._setInitToggle();
+		},
+		_setInitToggle: function() {
+			this._welToggleWrap.removeClass(this.sActiveClass);
+			this._welToggleCont.hide();
+		},
+		_assignElements: function() {
+			this._welToggleWrap = $(this.sTarget);
+			this._welToggleBtn = this._welToggleWrap.find('.btn_toggle');
+			this._welToggleCont = this._welToggleWrap.find('.cont_toggle');	
+		},
+		_attachEventHandlers: function() {
+			this._welToggleBtn.on('click', $.proxy(this._onClickToggleBtn, this));
+		},
+		_onClickToggleBtn: function(e) {
+			this._controlToggleBtn();
+			this._controlToggleCont();
+		},
+		_controlToggleBtn: function(){
+			var oSelf = this;
+			//버튼 텍스트 제어
+			if(this.bOpen){
+				oSelf._welToggleBtn.removeClass('close').addClass('open');	
+			}else{
+				oSelf._welToggleBtn.removeClass('open').addClass('close');
+			}
+		},
+		_controlToggleCont: function() {
+			var oSelf = this;
+			this._welToggleCont.stop(true, true).slideToggle(300, function () {
+				// 오픈상태 변경
+				oSelf.bOpen = !oSelf.bOpen;
+			});
+		}
+	};
+
+	$(function() {
+		var oExamViewtoggleEvent = new exam.View.toggleEvent();
+	}); 
+	</script>
+</body>
+</html
